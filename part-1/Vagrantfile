@@ -1,36 +1,55 @@
-# # -*- mode: ruby -*-
-# # vi: set ft=ruby :
+
+# shared data
+CPU = 1
+MEMORY = 1024
+
+# The server machine data
+SERVER_IP = "192.168.56.110"
+SERVER_HOST_NAME = "m0saanS"
+SERVER_MACHINE_NAME = "m0saanS"
+
+# The worker machine data
+WORKER_IP = "192.168.56.111"
+WORKER_HOST_NAME = "m0saanSW"
+WORKER_MACHINE_NAME = "m0saanSW"
 
 Vagrant.configure("2") do |config|
-  config.vm.define "serverS" do |server|
-    server.vm.box = "virtualbox"  # Provide the box image of your choice
-    server.vm.hostname = "serverS"
 
-    # Network configuration for the first machine
-    server.vm.network "private_network", ip: "192.168.56.110"
-
-    # Provider-specific configurations
-    server.vm.provider "virtualbox" do |vb|
-      vb.memory = "512"
-      vb.cpus = 1
-    end
-
-    # Shell provisioner to install K3s and kubectl
-    server.vm.provision "shell", inline: <<-SHELL
-      # Install K3s
-      curl -sfL https://get.k3s.io | sh -
-
-      # Install kubectl
-      curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-      chmod +x ./kubectl
-      mv ./kubectl /usr/local/bin/kubectl
-    SHELL
+  config.vm.box = "bento/ubuntu-16.04"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "512"
+    vb.cpus = 1
   end
-end
 
+  config.vm.define SERVER_MACHINE_NAME do |server|
+    server.vm.hostname = SERVER_HOST_NAME
+    server.vm.network "private_network", ip: SERVER_IP # Network configuration for the first machine
 
-Vagrant.configure("2") do |config|
-  config.vm.box = "generic/alpine318"
-  config.vm.network "private_network", ip: "192.168.56.110"
-  config.vm.provider "vmware_fusion"
+    # # Shell provisioner to install K3s and kubectl
+    # server.vm.provision "shell", inline: <<-SHELL
+    #   # Install K3s
+    #   curl -sfL https://get.k3s.io | sh -
+
+    #   # Install kubectl
+    #   curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    #   chmod +x ./kubectl
+    #   mv ./kubectl /usr/local/bin/kubectl
+    # SHELL
+  end
+
+  config.vm.define WORKER_MACHINE_NAME do |server|
+    server.vm.hostname = WORKER_HOST_NAME
+    server.vm.network "private_network", ip: WORKER_IP # Network configuration for the first machine
+
+    # # Shell provisioner to install K3s and kubectl
+    # server.vm.provision "shell", inline: <<-SHELL
+    #   # Install K3s
+    #   curl -sfL https://get.k3s.io | sh -
+
+    #   # Install kubectl
+    #   curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+    #   chmod +x ./kubectl
+    #   mv ./kubectl /usr/local/bin/kubectl
+    # SHELL
+  end
 end
