@@ -1,0 +1,36 @@
+# # -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "serverS" do |server|
+    server.vm.box = "virtualbox"  # Provide the box image of your choice
+    server.vm.hostname = "serverS"
+
+    # Network configuration for the first machine
+    server.vm.network "private_network", ip: "192.168.56.110"
+
+    # Provider-specific configurations
+    server.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.cpus = 1
+    end
+
+    # Shell provisioner to install K3s and kubectl
+    server.vm.provision "shell", inline: <<-SHELL
+      # Install K3s
+      curl -sfL https://get.k3s.io | sh -
+
+      # Install kubectl
+      curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      chmod +x ./kubectl
+      mv ./kubectl /usr/local/bin/kubectl
+    SHELL
+  end
+end
+
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "generic/alpine318"
+  config.vm.network "private_network", ip: "192.168.56.110"
+  config.vm.provider "vmware_fusion"
+end
