@@ -20,7 +20,7 @@ Install dependencies
 - [Vagrant](https://www.vagrantup.com/)
 - [VMWare Fusion](https://www.vmware.com/products/fusion.html)    
 
-## [Part 1: Setting up a K3s cluster with Vagrant](https://github.com/mamoussa405/Inception-Of-Things/tree/main/p1)
+## [Part 1: Setting up a K3s cluster with Vagrant](https://github.com/m0saan/Inception-of-Things-3M/tree/m0saan__impl/part-1)
 
 Inside the folder Part-1, this Vagrantfile and associated scripts are used to set up a Kubernetes cluster with one controller node and one worker node using the K3s lightweight Kubernetes distribution.
 
@@ -34,4 +34,6 @@ The IP of the first machine (Server) will be `192.168.56.110`, and the IP of the
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![Creating VMs with vagrant](assets/1.png)
+![Creating VMs with vagrant](assets/2.png)
+![Log-in with ssh to both VMs](assets/3.png)
