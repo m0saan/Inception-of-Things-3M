@@ -1,0 +1,31 @@
+# shared data
+CPU = 1
+MEMORY = 512
+
+# The server machine data
+SERVER_IP = "192.168.56.110"
+SERVER_HOST_NAME = "m0saanS"
+SERVER_MACHINE_NAME = "m0saanS"
+
+# Vagrant configuration
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "spox/ubuntu-arm"
+  
+  # Configuring the server machine
+  config.vm.define SERVER_MACHINE_NAME do |server|
+    server.vm.hostname = SERVER_HOST_NAME
+    server.vm.network "private_network", ip: SERVER_IP
+    server.vm.network "forwarded_port", guest: 80, host: 80
+    server.vm.provider :vmware_desktop do |vmware|
+      vmware.vmx["ethernet0.pcislotnumber"] = "160"
+      vmware.vmx["ethernet1.pcislotnumber"] = "256"
+      vmware.memory = MEMORY
+      vmware.cpus = CPU
+    end
+    server.vm.provision "shell", path: "kubernetes_cluster_setup/k3s_controller_setup.sh", args: [SERVER_IP]
+    server.vm.provision "shell", path: "kubernetes_cluster_setup/run.sh"
+
+  end
+
+end
