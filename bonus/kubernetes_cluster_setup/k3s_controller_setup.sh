@@ -24,18 +24,10 @@ echo -e "${CYAN} Installing K3D...${NC}"
 wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 echo -e "${GREEN}$ Done installing K3D.${NC}"
 
+
+echo -e "${CYAN} Setting up the Kubernetes cluster...${NC}"
 sudo sh /vagrant/kubernetes_cluster_setup/setup_cd.sh
+echo -e "${GREEN}Kubernetes cluster setup completed.${NC}"
 
-
-## install Helm
-
-# sudo curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-
-# ## create namespace for gitlab
-
-# sudo kubectl create namespace gitlab
-
-# sudo helm repo add gitlab https://charts.gitlab.io/
-# sudo helm repo update
 
 echo -e "${GREEN}Setup completed.${NC}"

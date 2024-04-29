@@ -20,7 +20,7 @@ sleep 5;
 echo "${CYAN}==> Installing ArgoCD in the k3d cluster...${NC}"
 # This command installs Argo CD in the k3d cluster.
 # sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/core-install.yaml
-# sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.0-rc5/manifests/install.yaml
+# sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.3.0-rc5/manifests/install.yaml``
 sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 sudo kubectl wait -n argocd --for=condition=Ready pods --all --timeout=120s
 sudo kubectl wait -n argocd --for=condition=Ready pods --all --timeout=10s
@@ -32,4 +32,4 @@ sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.dat
 sudo kubectl apply -f /vagrant/deployments/application.yaml
 # sudo kubectl wait deployment --namespace default --for=condition=available --timeout=120s --all
 
-sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 &
+sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8089:443 &
