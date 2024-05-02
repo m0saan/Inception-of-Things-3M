@@ -6,8 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    # repoURL: https://github.com/m0saan/IoT-moboustt.git
-    repoURL: https://192.168.56.110/root/IoT-moboustt
+    repoURL: https://github.com/m0saan/IoT-moboustt.git
+    # repoURL: https://dev.gitlab.com/root/iot-moboustt.git
     targetRevision: HEAD
     path: ops
   destination:
