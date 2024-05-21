@@ -1,0 +1,25 @@
+SERVER_IP = "192.168.56.110"
+WORKER_IP = "192.168.56.111"
+
+Vagrant.configure("2") do |config|
+  # Define VM configuration for Server
+  config.vm.define "Server" do |server|
+    server.vm.box = "ubuntu/focal64"  # Use Ubuntu 20.04 as the OS
+    server.vm.hostname = "Server"
+    server.vm.network "private_network", ip: "192.168.56.110"
+    server.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"  # Set memory size
+    end
+    server.vm.provision "shell", path: "provision/server.provision.sh", args: [SERVER_IP]
+  end
+  # Define VM configuration for ServerWorker
+  config.vm.define "ServerWorker" do |server_worker|
+    server_worker.vm.box = "ubuntu/focal64"  # Use Ubuntu 20.04 as the OS
+    server_worker.vm.hostname = "ServerWorker"
+    server_worker.vm.network "private_network", ip: "192.168.56.111"
+    server_worker.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"  # Set memory size
+    end
+    server_worker.vm.provision "shell", path: "provision/serverworker.provision.sh", args: [WORKER_IP, SERVER_IP]
+  end
+end 
