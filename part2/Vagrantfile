@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "Server" do |server|
     server.vm.box = "ubuntu/focal64"  # Use Ubuntu 20.04 as the OS
     server.vm.hostname = "Server"
-    server.vm.network "private_network", ip: "192.168.56.110"
+    server.vm.network "private_network", ip: SERVER_IP
     server.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"  # Set memory size
       vb.cpus = 1         # Set CPU count
