@@ -4,27 +4,7 @@ metadata:
   name: my-ingress
 spec:
   rules:
-  - host: app1.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-app1-service
-            port:
-              number: 80
-  - host: app2.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-app2-service
-            port:
-              number: 80
-  - host: app3.com
+  - host:
     http:
       paths:
       - path: /
@@ -34,8 +14,23 @@ spec:
             name: nginx-app3-service
             port:
               number: 80
-  defaultBackend:
-    service:
-      name: nginx-app3-service
-      port:
-        number: 80
+  - host: app2
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-app2-service
+            port:
+              number: 80
+  - host: app1
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-app1-service
+            port:
+              number: 80
