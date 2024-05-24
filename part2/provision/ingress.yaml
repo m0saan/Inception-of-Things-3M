@@ -4,7 +4,7 @@ metadata:
   name: my-ingress
 spec:
   rules:
-  - host: app1.example.com
+  - host: app1
     http:
       paths:
       - path: /
@@ -14,7 +14,7 @@ spec:
             name: nginx-app1-service
             port:
               number: 80
-  - host: app2.example.com
+  - host: app2
     http:
       paths:
       - path: /
@@ -24,7 +24,7 @@ spec:
             name: nginx-app2-service
             port:
               number: 80
-  - host: app3.example.com
+  - host: app3
     http:
       paths:
       - path: /

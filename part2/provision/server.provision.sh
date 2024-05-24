@@ -31,6 +31,6 @@ kubectl create configmap nginx2-welcome --from-file=/vagrant/provision/app2/inde
 
 kubectl apply -f /vagrant/provision/ingress.yaml
 
-echo "${SERVER_IP} app1.example.com" >> /etc/hosts
-echo "${SERVER_IP} app2.example.com" >> /etc/hosts
-echo "${SERVER_IP} app3.example.com" >> /etc/hosts
+echo "${SERVER_IP} app1" >> /etc/hosts
+echo "${SERVER_IP} app2" >> /etc/hosts
+echo "${SERVER_IP} app3" >> /etc/hosts
