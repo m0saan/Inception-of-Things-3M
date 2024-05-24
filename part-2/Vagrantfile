@@ -1,11 +1,11 @@
 # shared data
 CPU = 4
-MEMORY = 4096
+MEMORY = 2048
 
 # The server machine data
 SERVER_IP = "192.168.56.110"
-SERVER_HOST_NAME = "m0saanSB"
-SERVER_MACHINE_NAME = "m0saanSB"
+SERVER_HOST_NAME = "m0saanS"
+SERVER_MACHINE_NAME = "m0saanS"
 
 # Vagrant configuration
 Vagrant.configure("2") do |config|
@@ -18,8 +18,7 @@ Vagrant.configure("2") do |config|
 
     server.vm.hostname = SERVER_HOST_NAME
     server.vm.network "private_network", ip: SERVER_IP
-    server.vm.network "forwarded_port", guest: 6443, host: 6443
-    server.vm.network "forwarded_port", guest: 8080, host: 8080
+    server.vm.network "forwarded_port", guest: 80, host: 80
 
     server.vm.provider :vmware_desktop do |vmware|
       vmware.vmx["ethernet0.pcislotnumber"] = "160"
