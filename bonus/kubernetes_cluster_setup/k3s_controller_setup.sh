@@ -39,14 +39,15 @@ sudo gitlab-ctl reconfigure
 
 # # Initialize Git repository
 cp -r /vagrant/IoT-moboustt . && cd IoT-moboustt
-git init
-git add .
-git config --global user.email "moboustt@student.1337.ma"
-git config --global user.name "moboustt"
-git commit -m 'Initial commit'
-git remote add origin https://dev.gitlab.com/root/iot-moboustt.git
-git config --global http.sslverify false
-git push --set-upstream origin master
+sudo git init
+sudo git add .
+sudo git config --global --add safe.directory /home/vagrant/IoT-moboustt
+sudo git config --global user.email "moboustt@student.1337.ma"
+sudo git config --global user.name "moboustt"
+sudo git commit -m 'Initial commit'
+sudo git remote add origin https://dev.gitlab.com/root/iot-moboustt.git
+sudo git config --global http.sslverify false
+sudo git push --set-upstream origin master
 echo -e "${GREEN}Gitlab setup completed.${NC}"
 
 
