@@ -29,7 +29,6 @@ sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.dat
 sudo kubectl apply -f /vagrant/deployments/application.yaml
 # sudo kubectl wait deployment --namespace default --for=condition=available --timeout=120s --all
 
-sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 5555:443 &
-
+sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 &
 
 # sudo lsof -i -P -n | grep 8080
