@@ -1,2 +1,4 @@
 .vagrant
 p*/logs
+p*/provision/token
+p*/provision/config
