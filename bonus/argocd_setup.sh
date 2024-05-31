@@ -4,6 +4,7 @@ NC='\033[0m' # No Color
 CYAN='\033[0;36m'
 
 echo "${CYAN}==> Creating k3d cluster...${NC}"
+sudo systemctl start docker
 # `-p "8888:30080"`: This flag is used to map ports from the host machine to the Kubernetes cluster.
 # It's specified in the format `<host-port>:<container-port>`.
 # Here, it's mapping port 8888 on the host machine to port 30080 in the Kubernetes cluster.
@@ -26,10 +27,9 @@ echo "${CYAN}==> Getting ArgoCD password...${NC}"
 # This command retrieves the password for the Argo CD admin user.
 sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
 
-sudo kubectl apply -f /vagrant/deployments/application.yaml
-# sudo kubectl wait deployment --namespace default --for=condition=available --timeout=120s --all
+sudo kubectl apply -f application.yaml
+sleep 25;
 
-sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 5555:443 &
-
+sudo kubectl port-forward svc/argocd-server -n argocd 8888:443
 
 # sudo lsof -i -P -n | grep 8080
