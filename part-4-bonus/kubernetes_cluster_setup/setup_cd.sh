@@ -3,32 +3,41 @@ GR='\033[0;32m'
 NC='\033[0m' # No Color
 CYAN='\033[0;36m'
 
-echo "${CYAN}==> Creating k3d cluster...${NC}"
-# `-p "8888:30080"`: This flag is used to map ports from the host machine to the Kubernetes cluster.
-# It's specified in the format `<host-port>:<container-port>`.
-# Here, it's mapping port 8888 on the host machine to port 30080 in the Kubernetes cluster.
-# This means that any traffic sent to port 8888 on the host machine will be forwarded to port 30080 within the Kubernetes cluster.
+create_k3d_cluster() {
+    echo "${CYAN}==> Creating k3d cluster...${NC}"
+    sudo k3d cluster create IoT -p "8888:30080"
+    sleep 5
+}
 
-sudo k3d cluster create IoT -p "8888:30080"
-sleep 5;
+create_argocd_namespace() {
+    echo "${CYAN}==> Creating argocd namespace...${NC}"
+    sudo kubectl create namespace argocd
+    sleep 5
+}
 
-echo "${CYAN}==> Creating argocd namespace...${NC}"
-# This will create a new namespace, argocd, where Argo CD services and application resources will live.
-sudo kubectl create namespace argocd
-sleep 5;
+install_argocd() {
+    echo "${CYAN}==> Installing ArgoCD in the k3d cluster...${NC}"
+    sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+    sudo kubectl wait -n argocd --for=condition=Ready pods --all --timeout=60s
+}
 
-echo "${CYAN}==> Installing ArgoCD in the k3d cluster...${NC}"
-# This command installs Argo CD in the k3d cluster.
-sudo kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-sudo kubectl wait -n argocd --for=condition=Ready pods --all --timeout=60s
+get_argocd_password() {
+    echo "${CYAN}==> Getting ArgoCD password...${NC}"
+    sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
+}
 
-echo "${CYAN}==> Getting ArgoCD password...${NC}"
-# This command retrieves the password for the Argo CD admin user.
-sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && echo
+apply_application_yaml() {
+    sudo kubectl apply -f /vagrant/deployments/application.yaml
+    sudo kubectl wait deployment --namespace default --for=condition=available --timeout=120s --all
+}
 
-sudo kubectl apply -f /vagrant/deployments/application.yaml
-# sudo kubectl wait deployment --namespace default --for=condition=available --timeout=120s --all
+port_forward_argocd_server() {
+    sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 &
+}
 
-sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 &
-
-# sudo lsof -i -P -n | grep 8080
+create_k3d_cluster
+create_argocd_namespace
+install_argocd
+get_argocd_password
+apply_application_yaml
+port_forward_argocd_server

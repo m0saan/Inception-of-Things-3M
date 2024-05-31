@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: iot-app
+  namespace: argocd
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 9090 # Change this to the new port
+    - name: https
+      port: 443
+      targetPort: 9090 # Change this to the new port
+  selector:
+    app.kubernetes.io/name: iot-app
