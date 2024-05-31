@@ -57,7 +57,7 @@ sudo kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.dat
 
 sudo kubectl apply -f /vagrant/deployments/application.yaml
 # sudo kubectl wait deployment --namespace default --for=condition=available --timeout=120s --all
-
+sudo kubectl wait -n argocd --for=condition=Ready svc --all --timeout=-1s
 sudo kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443 &
 
 echo -e "${GREEN}Setup completed.${NC}"
