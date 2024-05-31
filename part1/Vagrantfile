@@ -3,7 +3,7 @@ WORKER_IP = "192.168.56.111"
 
 Vagrant.configure("2") do |config|
   # Define VM configuration for Server
-  config.vm.define "Server" do |server|
+  config.vm.define "eel-orchS" do |server|
     server.vm.box = "ubuntu/focal64"  # Use Ubuntu 20.04 as the OS
     server.vm.hostname = "eel-orchS"
     server.vm.network "private_network", ip: SERVER_IP
@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
   end
   
   # Define VM configuration for ServerWorker
-  config.vm.define "ServerWorker" do |server_worker|
+  config.vm.define "eel-orchSW" do |server_worker|
     server_worker.vm.box = "ubuntu/focal64"  # Use Ubuntu 20.04 as the OS
     server_worker.vm.hostname = "eel-orchSW"
     server_worker.vm.network "private_network", ip: WORKER_IP
