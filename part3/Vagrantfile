@@ -4,8 +4,8 @@ MEMORY = 2048
 
 # The server machine data
 SERVER_IP = "192.168.56.110"
-SERVER_HOST_NAME = "m0saanS"
-SERVER_MACHINE_NAME = "m0saanS"
+SERVER_HOST_NAME = "eel-orchS"
+SERVER_MACHINE_NAME = "eel-orchS"
 
 # Vagrant configuration
 Vagrant.configure("2") do |config|
